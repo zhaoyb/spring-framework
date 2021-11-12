@@ -130,6 +130,7 @@ public class PropertyPlaceholderHelper {
 			String value, PlaceholderResolver placeholderResolver, @Nullable Set<String> visitedPlaceholders) {
 
 		int startIndex = value.indexOf(this.placeholderPrefix);
+		// 没有找到替换符
 		if (startIndex == -1) {
 			return value;
 		}

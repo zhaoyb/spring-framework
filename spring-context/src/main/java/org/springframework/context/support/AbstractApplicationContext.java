@@ -241,6 +241,8 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 
 
 	/**
+	 * 创建一个没有父级的AbstractApplicationContext
+	 *
 	 * Create a new AbstractApplicationContext with no parent.
 	 */
 	public AbstractApplicationContext() {
@@ -333,6 +335,9 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	@Override
 	public ConfigurableEnvironment getEnvironment() {
 		if (this.environment == null) {
+			// 创建标准的ENV， ENV 和 ActiveProfiles 有关系，用于激活指定的配置
+			// Spring Profile特性是从3.1开始的，其主要是为了解决这样一种问题: 线上环境和测试环境使用不同的配置或是数据库或是其它。
+			// 有了Profile便可以在 不同环境之间无缝切换。**Spring容器管理的所有bean都是和一个profile绑定在一起的。
 			this.environment = createEnvironment();
 		}
 		return this.environment;
@@ -547,6 +552,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 			StartupStep contextRefresh = this.applicationStartup.start("spring.context.refresh");
 
 			// Prepare this context for refreshing.
+			// 预刷新，检测变量，设置状态
 			prepareRefresh();
 
 			// Tell the subclass to refresh the internal bean factory.
@@ -617,7 +623,9 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	 */
 	protected void prepareRefresh() {
 		// Switch to active.
+		// 启动时间
 		this.startupDate = System.currentTimeMillis();
+		// Atomic变量， 用于标示状态
 		this.closed.set(false);
 		this.active.set(true);
 
@@ -631,6 +639,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 		}
 
 		// Initialize any placeholder property sources in the context environment.
+		// 空实现
 		initPropertySources();
 
 		// Validate that all properties marked as required are resolvable:

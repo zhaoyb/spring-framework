@@ -56,6 +56,9 @@ public class ClassPathXmlApplicationContext extends AbstractXmlApplicationContex
 
 
 	/**
+	 *
+	 * 创建ApplicationContext
+	 *
 	 * Create a new ClassPathXmlApplicationContext for bean-style configuration.
 	 * @see #setConfigLocation
 	 * @see #setConfigLocations
@@ -76,6 +79,8 @@ public class ClassPathXmlApplicationContext extends AbstractXmlApplicationContex
 	}
 
 	/**
+	 * 创建ApplicationContext， 我们一般用这个方法比较多
+	 *
 	 * Create a new ClassPathXmlApplicationContext, loading the definitions
 	 * from the given XML file and automatically refreshing the context.
 	 * @param configLocation resource location
@@ -138,6 +143,7 @@ public class ClassPathXmlApplicationContext extends AbstractXmlApplicationContex
 			String[] configLocations, boolean refresh, @Nullable ApplicationContext parent)
 			throws BeansException {
 
+		// 这里就创建了一个文件解析器
 		super(parent);
 		setConfigLocations(configLocations);
 		if (refresh) {
